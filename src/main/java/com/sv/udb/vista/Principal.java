@@ -6,7 +6,9 @@
 package com.sv.udb.vista;
 
 import com.sv.udb.controlador.Equipos_Ctrl;
+import com.sv.udb.modelo.Equipos;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,8 +19,11 @@ public class Principal extends javax.swing.JFrame {
     /**
      * Creates new form Principal
      */
+    private int codiEqui;
+
     public Principal() {
         initComponents();
+        this.llenarTabla();
     }
 
     /**
@@ -41,6 +46,8 @@ public class Principal extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         txtDescripcionE = new javax.swing.JTextArea();
         btnAgregarE = new javax.swing.JButton();
+        btnModificarE = new javax.swing.JButton();
+        btnEliminarE = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -63,6 +70,11 @@ public class Principal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblEquipos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblEquiposMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblEquipos);
 
         jLabel1.setText("Agregar equipo");
@@ -82,6 +94,20 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        btnModificarE.setText("Modificar Equipo");
+        btnModificarE.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarEActionPerformed(evt);
+            }
+        });
+
+        btnEliminarE.setText("Eliminar Equipo");
+        btnEliminarE.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarEActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panEquiposLayout = new javax.swing.GroupLayout(panEquipos);
         panEquipos.setLayout(panEquiposLayout);
         panEquiposLayout.setHorizontalGroup(
@@ -89,23 +115,31 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panEquiposLayout.createSequentialGroup()
                 .addGroup(panEquiposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panEquiposLayout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(panEquiposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panEquiposLayout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtNombreE, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap()
+                                .addGroup(panEquiposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(panEquiposLayout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtNombreE, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(panEquiposLayout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(panEquiposLayout.createSequentialGroup()
-                                .addComponent(jLabel3)
+                                .addGap(136, 136, 136)
+                                .addComponent(jLabel1))
+                            .addGroup(panEquiposLayout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addComponent(btnAgregarE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(panEquiposLayout.createSequentialGroup()
-                        .addGap(56, 56, 56)
-                        .addComponent(btnAgregarE))
-                    .addGroup(panEquiposLayout.createSequentialGroup()
-                        .addGap(136, 136, 136)
-                        .addComponent(jLabel1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnModificarE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panEquiposLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnEliminarE)
+                        .addGap(100, 100, 100)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(98, 98, 98))
         );
@@ -127,9 +161,13 @@ public class Principal extends javax.swing.JFrame {
                             .addGroup(panEquiposLayout.createSequentialGroup()
                                 .addGap(18, 18, 18)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(32, 32, 32)
-                        .addComponent(btnAgregarE)
-                        .addGap(0, 85, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(panEquiposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnAgregarE)
+                            .addComponent(btnModificarE, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnEliminarE)
+                        .addGap(0, 55, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -158,14 +196,55 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnAgregarEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarEActionPerformed
         // TODO add your handling code here:
-   
-            
-            if (new Equipos_Ctrl().guardarEquipo(txtNombreE.getText(), txtDescripcionE.getText())) {
-                JOptionPane.showMessageDialog(null, "Guardo", "Exito", JOptionPane.INFORMATION_MESSAGE);
-            }
-            
-     
+
+        if (new Equipos_Ctrl().guardarEquipo(txtNombreE.getText(), txtDescripcionE.getText())) {
+            JOptionPane.showMessageDialog(null, "Guardo", "Exito", JOptionPane.INFORMATION_MESSAGE);
+            this.llenarTabla();
+        }
+
+
     }//GEN-LAST:event_btnAgregarEActionPerformed
+
+    private void tblEquiposMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEquiposMouseClicked
+        // TODO add your handling code here:
+        int fila = this.tblEquipos.getSelectedRow();
+        if (fila >= 0) {
+            Equipos obje = (Equipos) this.tblEquipos.getValueAt(fila, 0);
+            this.codiEqui = obje.getCodi_equi();
+            //this.txtCodi.setText(String.valueOf(obje.getCodiEqui()));
+            this.txtNombreE.setText(obje.getNomb_equi());
+            this.txtDescripcionE.setText(obje.getDesc_equi());
+        }
+    }//GEN-LAST:event_tblEquiposMouseClicked
+
+    private void btnModificarEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarEActionPerformed
+        // TODO add your handling code here:
+        if (new Equipos_Ctrl().actualizarEquipo(String.valueOf(this.codiEqui), txtNombreE.getText(), txtDescripcionE.getText())) {
+            JOptionPane.showMessageDialog(null, "Modifico", "Exito", JOptionPane.INFORMATION_MESSAGE);
+            this.llenarTabla();
+        }
+    }//GEN-LAST:event_btnModificarEActionPerformed
+
+    private void btnEliminarEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarEActionPerformed
+        // TODO add your handling code here:
+        if (new Equipos_Ctrl().eliminarEquipo(String.valueOf(this.codiEqui)))     {
+            JOptionPane.showMessageDialog(null, "Elimino", "Exito", JOptionPane.INFORMATION_MESSAGE);
+            this.llenarTabla();
+        }
+    }//GEN-LAST:event_btnEliminarEActionPerformed
+    private void llenarTabla() {
+        try {
+            DefaultTableModel model = (DefaultTableModel) this.tblEquipos.getModel();
+            while (model.getRowCount() > 0) {
+                model.removeRow(0);
+            } //Limpiar modelo
+            for (Equipos temp : new Equipos_Ctrl().consTodo()) {
+                model.addRow(new Object[]{temp, temp.getDesc_equi()});
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -204,6 +283,8 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarE;
+    private javax.swing.JButton btnEliminarE;
+    private javax.swing.JButton btnModificarE;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
