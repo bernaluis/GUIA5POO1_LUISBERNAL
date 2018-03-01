@@ -6,8 +6,12 @@
 package com.sv.udb.vista;
 
 import com.sv.udb.controlador.Equipos_Ctrl;
+import com.sv.udb.controlador.Jugadores_Ctrl;
 import com.sv.udb.modelo.Equipos;
+import com.sv.udb.modelo.Jugadores;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -20,10 +24,13 @@ public class Principal extends javax.swing.JFrame {
      * Creates new form Principal
      */
     private int codiEqui;
+    private int codiJuga;
 
     public Principal() {
         initComponents();
         this.llenarTabla();
+        this.cargarCombos();
+        this.llenarTablaJ();
     }
 
     /**
@@ -48,6 +55,22 @@ public class Principal extends javax.swing.JFrame {
         btnAgregarE = new javax.swing.JButton();
         btnModificarE = new javax.swing.JButton();
         btnEliminarE = new javax.swing.JButton();
+        pnlJugadores = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        txtNombreJ = new javax.swing.JTextField();
+        txtEdadJ = new javax.swing.JTextField();
+        txtPesoJ = new javax.swing.JTextField();
+        txtAlturaJ = new javax.swing.JTextField();
+        cmbEquipos = new javax.swing.JComboBox<>();
+        btnAgregarJ = new javax.swing.JButton();
+        btnModificarJ = new javax.swing.JButton();
+        btnEliminarJ = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblJugadores = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -167,12 +190,143 @@ public class Principal extends javax.swing.JFrame {
                             .addComponent(btnModificarE, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnEliminarE)
-                        .addGap(0, 55, Short.MAX_VALUE))
+                        .addGap(0, 102, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
         tbpPrincipal.addTab("Equipos", panEquipos);
+
+        jLabel4.setText("Nombre:");
+
+        jLabel5.setText("Edad:");
+
+        jLabel6.setText("Altura:");
+
+        jLabel7.setText("Peso:");
+
+        jLabel8.setText("Equipo:");
+
+        btnAgregarJ.setText("Agregar");
+        btnAgregarJ.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarJActionPerformed(evt);
+            }
+        });
+
+        btnModificarJ.setText("Modificar");
+        btnModificarJ.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarJActionPerformed(evt);
+            }
+        });
+
+        btnEliminarJ.setText("Eliminar");
+        btnEliminarJ.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarJActionPerformed(evt);
+            }
+        });
+
+        tblJugadores.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Nombre", "Edad", "Altura", "Peso", "Equipo"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblJugadores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblJugadoresMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(tblJugadores);
+
+        javax.swing.GroupLayout pnlJugadoresLayout = new javax.swing.GroupLayout(pnlJugadores);
+        pnlJugadores.setLayout(pnlJugadoresLayout);
+        pnlJugadoresLayout.setHorizontalGroup(
+            pnlJugadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlJugadoresLayout.createSequentialGroup()
+                .addGroup(pnlJugadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlJugadoresLayout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addGroup(pnlJugadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlJugadoresLayout.createSequentialGroup()
+                                .addGroup(pnlJugadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel4))
+                                .addGap(29, 29, 29)
+                                .addGroup(pnlJugadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtNombreJ)
+                                    .addComponent(txtEdadJ)
+                                    .addComponent(txtAlturaJ)
+                                    .addComponent(txtPesoJ)
+                                    .addComponent(cmbEquipos, 0, 87, Short.MAX_VALUE)))
+                            .addGroup(pnlJugadoresLayout.createSequentialGroup()
+                                .addGap(5, 5, 5)
+                                .addComponent(btnAgregarJ)
+                                .addGap(31, 31, 31)
+                                .addComponent(btnModificarJ))))
+                    .addGroup(pnlJugadoresLayout.createSequentialGroup()
+                        .addGap(76, 76, 76)
+                        .addComponent(btnEliminarJ)))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
+        );
+        pnlJugadoresLayout.setVerticalGroup(
+            pnlJugadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlJugadoresLayout.createSequentialGroup()
+                .addGroup(pnlJugadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlJugadoresLayout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addGroup(pnlJugadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(txtNombreJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlJugadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(txtEdadJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlJugadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(txtAlturaJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlJugadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(txtPesoJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlJugadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(cmbEquipos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(32, 32, 32)
+                        .addGroup(pnlJugadoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnAgregarJ)
+                            .addComponent(btnModificarJ))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnEliminarJ))
+                    .addGroup(pnlJugadoresLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        tbpPrincipal.addTab("Jugadores", pnlJugadores);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -200,6 +354,7 @@ public class Principal extends javax.swing.JFrame {
         if (new Equipos_Ctrl().guardarEquipo(txtNombreE.getText(), txtDescripcionE.getText())) {
             JOptionPane.showMessageDialog(null, "Guardo", "Exito", JOptionPane.INFORMATION_MESSAGE);
             this.llenarTabla();
+            this.cargarCombos();
         }
 
 
@@ -222,25 +377,107 @@ public class Principal extends javax.swing.JFrame {
         if (new Equipos_Ctrl().actualizarEquipo(String.valueOf(this.codiEqui), txtNombreE.getText(), txtDescripcionE.getText())) {
             JOptionPane.showMessageDialog(null, "Modifico", "Exito", JOptionPane.INFORMATION_MESSAGE);
             this.llenarTabla();
+            this.cargarCombos();
         }
     }//GEN-LAST:event_btnModificarEActionPerformed
 
     private void btnEliminarEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarEActionPerformed
         // TODO add your handling code here:
-        if (new Equipos_Ctrl().eliminarEquipo(String.valueOf(this.codiEqui)))     {
-            JOptionPane.showMessageDialog(null, "Elimino", "Exito", JOptionPane.INFORMATION_MESSAGE);
-            this.llenarTabla();
+        int confirmacion = JOptionPane.showConfirmDialog(null, "¿Estas seguro que deseas borrarlo?", "Alerta", JOptionPane.YES_NO_OPTION);
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            if (new Equipos_Ctrl().eliminarEquipo(String.valueOf(this.codiEqui))) {
+                JOptionPane.showMessageDialog(null, "Elimino", "Exito", JOptionPane.INFORMATION_MESSAGE);
+                this.llenarTabla();
+                this.cargarCombos();
+            }
         }
+
     }//GEN-LAST:event_btnEliminarEActionPerformed
+
+    private void btnAgregarJActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarJActionPerformed
+        // TODO add your handling code here:
+        if (new Jugadores_Ctrl().guar((Equipos) cmbEquipos.getSelectedItem(), this.txtNombreJ.getText(), Integer.parseInt(this.txtEdadJ.getText()), Integer.parseInt(this.txtAlturaJ.getText()), Integer.parseInt(this.txtPesoJ.getText()))) {
+            JOptionPane.showMessageDialog(null, "Guardo", "Exito", JOptionPane.INFORMATION_MESSAGE);
+            this.llenarTablaJ();
+
+        }
+    }//GEN-LAST:event_btnAgregarJActionPerformed
+
+    private void tblJugadoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblJugadoresMouseClicked
+        int fila = this.tblJugadores.getSelectedRow();
+        if (fila >= 0) {
+            Jugadores obje = (Jugadores) this.tblJugadores.getValueAt(fila, 0);
+            this.codiEqui = obje.getCodiEqui().getCodi_equi();
+            //se deja editable porque el setselecteditem es editar
+            this.cmbEquipos.setEditable(true);
+            this.cmbEquipos.setSelectedItem(obje.getCodiEqui());
+            this.cmbEquipos.setEditable(false);
+            this.txtNombreJ.setText(obje.getNombJuga());
+            this.txtAlturaJ.setText(String.valueOf(obje.getAltuJuga()));
+            this.txtEdadJ.setText(String.valueOf(obje.getEdadJuga()));
+            this.txtPesoJ.setText(String.valueOf(obje.getPesoJuga()));
+        }
+    }//GEN-LAST:event_tblJugadoresMouseClicked
+
+    private void btnModificarJActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarJActionPerformed
+        // TODO add your handling code here:
+        if (new Jugadores_Ctrl().modi((Equipos) cmbEquipos.getSelectedItem(), this.txtNombreJ.getText(), Integer.parseInt(this.txtEdadJ.getText()), Integer.parseInt(this.txtAlturaJ.getText()), Integer.parseInt(this.txtPesoJ.getText()), this.codiEqui)) {
+            JOptionPane.showMessageDialog(null, "Modifico", "Exito", JOptionPane.INFORMATION_MESSAGE);
+            this.llenarTablaJ();
+
+        }
+    }//GEN-LAST:event_btnModificarJActionPerformed
+
+    private void btnEliminarJActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarJActionPerformed
+        // TODO add your handling code here:
+        int confirmacion = JOptionPane.showConfirmDialog(null, "¿Estas seguro que deseas borrarlo?", "Alerta", JOptionPane.YES_NO_OPTION);
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            if (new Jugadores_Ctrl().del(this.codiEqui)) {
+                JOptionPane.showMessageDialog(null, "Elimino", "Exito", JOptionPane.INFORMATION_MESSAGE);
+                this.llenarTablaJ();
+
+            }
+        }
+    }//GEN-LAST:event_btnEliminarJActionPerformed
+    private void cargarCombos() {
+        DefaultComboBoxModel<Equipos> modeJ = new DefaultComboBoxModel<>();
+        modeJ.removeAllElements();
+        for (Equipos temp : new Equipos_Ctrl().consTodo()) {
+            modeJ.addElement(temp);
+        }
+        this.cmbEquipos.setModel((DefaultComboBoxModel) modeJ);
+    }
+
     private void llenarTabla() {
         try {
             DefaultTableModel model = (DefaultTableModel) this.tblEquipos.getModel();
+
             while (model.getRowCount() > 0) {
                 model.removeRow(0);
+
             } //Limpiar modelo
             for (Equipos temp : new Equipos_Ctrl().consTodo()) {
                 model.addRow(new Object[]{temp, temp.getDesc_equi()});
             }
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+    }
+
+    private void llenarTablaJ() {
+        try {
+
+            DefaultTableModel modelJ = (DefaultTableModel) this.tblJugadores.getModel();
+            while (modelJ.getRowCount() > 0) {
+
+                modelJ.removeRow(0);
+            } //Limpiar modelo
+
+            for (Jugadores temp : new Jugadores_Ctrl().consTodo()) {
+                modelJ.addRow(new Object[]{temp, temp.getEdadJuga(), temp.getAltuJuga(), temp.getPesoJuga(), temp.getCodiEqui()});
+            }
+
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
@@ -277,23 +514,44 @@ public class Principal extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Principal().setVisible(true);
+                try {
+                    UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+                } catch (Exception e) {
+                    System.out.println("Error " + e.getMessage());
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarE;
+    private javax.swing.JButton btnAgregarJ;
     private javax.swing.JButton btnEliminarE;
+    private javax.swing.JButton btnEliminarJ;
     private javax.swing.JButton btnModificarE;
+    private javax.swing.JButton btnModificarJ;
+    private javax.swing.JComboBox<String> cmbEquipos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JPanel panEquipos;
+    private javax.swing.JPanel pnlJugadores;
     private javax.swing.JTable tblEquipos;
+    private javax.swing.JTable tblJugadores;
     private javax.swing.JTabbedPane tbpPrincipal;
+    private javax.swing.JTextField txtAlturaJ;
     private javax.swing.JTextArea txtDescripcionE;
+    private javax.swing.JTextField txtEdadJ;
     private javax.swing.JTextField txtNombreE;
+    private javax.swing.JTextField txtNombreJ;
+    private javax.swing.JTextField txtPesoJ;
     // End of variables declaration//GEN-END:variables
 }
